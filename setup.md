@@ -33,7 +33,7 @@ in Linux, or [Git Bash][gitbash] on Windows, execute the following command:
 cd ~/Desktop
 mkdir src
 cd src
-uv init ml-xray
+uv init --native-tls ml-xray
 cd ~/Desktop/src/ml-xray
 ```
 
@@ -52,11 +52,13 @@ create your project:
 cd /D %userprofile%\Desktop
 mkdir src
 cd src
-uv init ml-xray
+uv init --native-tls ml-xray
 cd /D %userprofile%\Desktop\src\ml-xray
 ```
 
 :::::::::::::::::::::::::
+
+Note the `--native-tls` option may be necessary in some environments.
 
 ## Download Project Package Dependencies
 

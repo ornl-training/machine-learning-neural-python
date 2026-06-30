@@ -116,7 +116,7 @@ print(image.shape)
 ```
 
 Here we see that the image has 3 dimensions. The first dimension is height (512 pixels) and the second is width (also 512 pixels).
-The presence of a third dimension indicates that we are looking at a color image ("RGB", or Red, Green, Blue).
+The presence of a third dimension indicates that we are looking at a color image. The last "RGB" index holds separate Red, Green, and Blue channels.  For these images, however, R=G=B, so it doesn't appear to have color.
 
 For more detail on image representation in Python, take a look at the [Data Carpentry course on Image Processing with Python](https://datacarpentry.org/image-processing/). The following image is reproduced from the [section on Image Representation](https://datacarpentry.org/image-processing/03-skimage-images/index.html).
 
@@ -171,6 +171,15 @@ dataset = dataset_effusion + dataset_normal
 labels = np.concatenate([label_effusion, label_normal])
 ```
 
+:::::::::::::::::::::::::::::::::::::::: Performance Optimization
+
+Pro Tip: the code above loads all 700 images at once.  In real-world
+deep learning, we use Data Loaders (like torch.util.data.DataLoader) to
+load images from disk on-the-fly during training.  This avoids the memory
+bottleneck of loading the entire dataset into RAM.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ### Downsampling
 
 X-ray images are often high resolution, which can be useful for detailed clinical interpretation. However, for training a machine learning model, especially in an educational or prototype setting, using smaller images can reduce:
@@ -203,6 +212,10 @@ Before training a model, it's important to scale input data. A common approach i
 for i in range(len(dataset)):
   dataset[i] = (dataset[i] - np.mean(dataset[i])) / np.std(dataset[i])
 ```
+
+Note that this standardizes each image individually, so that
+the image mean is now zero for *every* image.  If we had standardized the entire
+dataset, there would still be variations in `dataset[i].mean()`.
 
 ### Reshaping
 
@@ -247,6 +260,9 @@ plt.imshow(dataset[idx], cmap='gray', vmin=min(vals), vmax=max(vals))
 
 ![](fig/final_example_image.png){alt='Example greyscale image' width="400px"}
 
+Note that vmin and vmax are used because our images are no longer on a 0-255 scale,
+but have values centered around zero.  Without specifying these, matplotlib
+auto-scales.
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
