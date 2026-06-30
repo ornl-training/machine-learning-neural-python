@@ -322,7 +322,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Training and evaluation</h1>
-        <p>Last updated on 2026-06-17 |
+        <p>Last updated on 2026-06-30 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-neural-python/edit/main/episodes/05-train_eval.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -475,7 +475,7 @@ your data and hardware.</p>
 <span id="cb1-65"><a href="#cb1-65" tabindex="-1" aria-label="code-block-1-65"></a>    val_losses.append(val_loss)</span>
 <span id="cb1-66"><a href="#cb1-66" tabindex="-1" aria-label="code-block-1-66"></a>    val_accs.append(val_acc)</span>
 <span id="cb1-67"><a href="#cb1-67" tabindex="-1" aria-label="code-block-1-67"></a>    </span>
-<span id="cb1-68"><a href="#cb1-68" tabindex="-1" aria-label="code-block-1-68"></a>    <span class="cf">if</span> val_loss <span class="op">&lt;&lt;</span> best best_val_loss:</span>
+<span id="cb1-68"><a href="#cb1-68" tabindex="-1" aria-label="code-block-1-68"></a>    <span class="cf">if</span> val_loss <span class="op">&lt;</span> best_val_loss:</span>
 <span id="cb1-69"><a href="#cb1-69" tabindex="-1" aria-label="code-block-1-69"></a>        best_val_loss <span class="op">=</span> val_loss</span>
 <span id="cb1-70"><a href="#cb1-70" tabindex="-1" aria-label="code-block-1-70"></a>        torch.save(model.state_dict(), <span class="st">'best_model.pt'</span>)</span>
 <span id="cb1-71"><a href="#cb1-71" tabindex="-1" aria-label="code-block-1-71"></a>        </span>
@@ -528,7 +528,7 @@ to the validation accuracy?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: upper-alpha"><li><p>If the training loss decreases while the validation loss
 increases, the model is <strong>overfitting</strong> — it’s learning the
@@ -595,7 +595,7 @@ Compare:</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <ol style="list-style-type: upper-alpha"><li>Adding batch normalization can improve training stability and
 accuracy. Find this line in your model:</li>
@@ -786,7 +786,7 @@ the model has not seen during training.</li>
   "url": "https://carpentries-incubator.github.io/machine-learning-neural-python/instructor/05-train_eval.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-neural-python/instructor/05-train_eval.html",
   "dateCreated": "2021-10-25",
-  "dateModified": "2026-06-17",
+  "dateModified": "2026-06-30",
   "datePublished": "2026-06-30"
 }
 

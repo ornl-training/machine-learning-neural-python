@@ -454,7 +454,7 @@ following command:</p>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> ~/Desktop</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="fu">mkdir</span> src</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="bu">cd</span> src</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="ex">uv</span> init ml-xray</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="ex">uv</span> init <span class="at">--native-tls</span> ml-xray</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="bu">cd</span> ~/Desktop/src/ml-xray</span></code></pre>
 </div>
 </div>
@@ -479,12 +479,14 @@ create your project:</p>
 <pre class="source"><code>cd /D %userprofile%\Desktop
 mkdir src
 cd src
-uv init ml-xray
+uv init --native-tls ml-xray
 cd /D %userprofile%\Desktop\src\ml-xray</code></pre>
 </div>
 </div>
 </div>
 </div>
+<p>Note the <code>--native-tls</code> option may be necessary in some
+environments.</p>
 </section><section><h2 class="section-heading" id="download-project-package-dependencies">Download Project Package Dependencies<a class="anchor" aria-label="anchor" href="#download-project-package-dependencies"></a></h2>
 <hr class="half-width"><p>The major strength of Python is the number of libraries available.
 These provide functionality like loading and manipulating images,

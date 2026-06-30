@@ -322,7 +322,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Visualisation</h1>
-        <p>Last updated on 2026-06-17 |
+        <p>Last updated on 2026-06-30 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-neural-python/edit/main/episodes/02-visualisation.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -471,7 +471,9 @@ of our images:</p>
 <p>Here we see that the image has 3 dimensions. The first dimension is
 height (512 pixels) and the second is width (also 512 pixels). The
 presence of a third dimension indicates that we are looking at a color
-image (“RGB”, or Red, Green, Blue).</p>
+image. The last “RGB” index holds separate Red, Green, and Blue
+channels. For these images, however, R=G=B, so it doesn’t appear to have
+color.</p>
 <p>For more detail on image representation in Python, take a look at the
 <a href="https://datacarpentry.org/image-processing/" class="external-link">Data Carpentry
 course on Image Processing with Python</a>. The following image is
@@ -528,6 +530,12 @@ to a list.</p>
 <span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a>dataset <span class="op">=</span> dataset_effusion <span class="op">+</span> dataset_normal</span>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a>labels <span class="op">=</span> np.concatenate([label_effusion, label_normal])</span></code></pre>
 </div>
+<p>:::::::::::::::::::::::::::::::::::::::: Performance Optimization</p>
+<p>Pro Tip: the code above loads all 700 images at once. In real-world
+deep learning, we use Data Loaders (like torch.util.data.DataLoader) to
+load images from disk on-the-fly during training. This avoids the memory
+bottleneck of loading the entire dataset into RAM.</p>
+<p>:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::</p>
 <div class="section level3">
 <h3 id="downsampling">Downsampling<a class="anchor" aria-label="anchor" href="#downsampling"></a></h3>
 <p>X-ray images are often high resolution, which can be useful for
@@ -571,6 +579,10 @@ scaled.</p>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(dataset)):</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a>  dataset[i] <span class="op">=</span> (dataset[i] <span class="op">-</span> np.mean(dataset[i])) <span class="op">/</span> np.std(dataset[i])</span></code></pre>
 </div>
+<p>Note that this standardizes each image individually, so that the
+image mean is now zero for <em>every</em> image. If we had standardized
+the entire dataset, there would still be variations in
+<code>dataset[i].mean()</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="reshaping">Reshaping<a class="anchor" aria-label="anchor" href="#reshaping"></a></h3>
@@ -626,7 +638,10 @@ e.g., we can plot the first image in the dataset with:</p>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>vals <span class="op">=</span> dataset[idx].flatten()</span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>plt.imshow(dataset[idx], cmap<span class="op">=</span><span class="st">'gray'</span>, vmin<span class="op">=</span><span class="bu">min</span>(vals), vmax<span class="op">=</span><span class="bu">max</span>(vals))</span></code></pre>
 </div>
-<figure><img src="fig/final_example_image.png" alt="Example greyscale image" width="400" class="figure mx-auto d-block"></figure><div id="keypoints1" class="callout keypoints">
+<figure><img src="fig/final_example_image.png" alt="Example greyscale image" width="400" class="figure mx-auto d-block"></figure><p>Note that vmin and vmax are used because our images are no longer on
+a 0-255 scale, but have values centered around zero. Without specifying
+these, matplotlib auto-scales.</p>
+<div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
@@ -704,7 +719,7 @@ for machine learning.</li>
   "url": "https://carpentries-incubator.github.io/machine-learning-neural-python/02-visualisation.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-neural-python/02-visualisation.html",
   "dateCreated": "2021-10-25",
-  "dateModified": "2026-06-17",
+  "dateModified": "2026-06-30",
   "datePublished": "2026-06-30"
 }
 
