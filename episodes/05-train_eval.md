@@ -121,7 +121,7 @@ for epoch in range(epochs):
     val_losses.append(val_loss)
     val_accs.append(val_acc)
     
-    if val_loss << best best_val_loss:
+    if val_loss < best_val_loss:
         best_val_loss = val_loss
         torch.save(model.state_dict(), 'best_model.pt')
         

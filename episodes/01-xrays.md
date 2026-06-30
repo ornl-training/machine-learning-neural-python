@@ -86,8 +86,8 @@ import os
 # If your dataset is compressed, unzip with:
 # !unzip chest_xrays.zip
 
-# Define folders containing images
-data_path = os.path.join("chest_xrays")
+# Define folders containing images (assume we are in Desktop/src/ml-xray)
+data_path = "chest_xrays"
 effusion_path = os.path.join(data_path, "effusion", "*.png")
 normal_path = os.path.join(data_path, "normal", "*.png")
 
@@ -104,6 +104,10 @@ Number of cases with pleural effusion:  350
 Number of normal cases:  350
 ```
 
+Note that `glob()` makes a list of the directory contents in
+an unspecified order.  If you want consistent results, you should
+use `sort(effusion_list)`.  This is less important
+for our case, since we are going to shuffle these later.
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
