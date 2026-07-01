@@ -171,14 +171,15 @@ dataset = dataset_effusion + dataset_normal
 labels = np.concatenate([label_effusion, label_normal])
 ```
 
-:::::::::::::::::::::::::::::::::::::::: Performance Optimization
+
+::::::::::::  spoiler
 
 Pro Tip: the code above loads all 700 images at once.  In real-world
 deep learning, we use Data Loaders (like torch.util.data.DataLoader) to
 load images from disk on-the-fly during training.  This avoids the memory
 bottleneck of loading the entire dataset into RAM.
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::
 
 ### Downsampling
 
