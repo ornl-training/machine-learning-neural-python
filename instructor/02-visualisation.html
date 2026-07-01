@@ -322,7 +322,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Visualisation</h1>
-        <p>Last updated on 2026-06-30 |
+        <p>Last updated on 2026-07-01 |
 
         <a href="https://github.com/carpentries-incubator/machine-learning-neural-python/edit/main/episodes/02-visualisation.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -440,7 +440,7 @@ predictions.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Your accuracy is the fraction of correct predictions (e.g. 6 out of
 10 = 60%).<br>
@@ -532,12 +532,21 @@ to a list.</p>
 <span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a>dataset <span class="op">=</span> dataset_effusion <span class="op">+</span> dataset_normal</span>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a>labels <span class="op">=</span> np.concatenate([label_effusion, label_normal])</span></code></pre>
 </div>
-<p>:::::::::::::::::::::::::::::::::::::::: Performance Optimization</p>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div class="accordion-body">
 <p>Pro Tip: the code above loads all 700 images at once. In real-world
 deep learning, we use Data Loaders (like torch.util.data.DataLoader) to
 load images from disk on-the-fly during training. This avoids the memory
 bottleneck of loading the entire dataset into RAM.</p>
-<p>:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::</p>
+</div>
+</div>
+</div>
+</div>
 <div class="section level3">
 <h3 id="downsampling">Downsampling<a class="anchor" aria-label="anchor" href="#downsampling"></a></h3>
 <p>X-ray images are often high resolution, which can be useful for
@@ -622,7 +631,7 @@ effusion and 350 normal), each with dimensions 256×256.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <ol style="list-style-type: upper-alpha"><li>Shape after resizing: <code>dataset[0].shape</code> (256, 256)</li>
 <li>The mean is 0 (<code>dataset[0].mean()</code>) and the standard
@@ -721,7 +730,7 @@ for machine learning.</li>
   "url": "https://carpentries-incubator.github.io/machine-learning-neural-python/instructor/02-visualisation.html",
   "identifier": "https://carpentries-incubator.github.io/machine-learning-neural-python/instructor/02-visualisation.html",
   "dateCreated": "2021-10-25",
-  "dateModified": "2026-06-30",
+  "dateModified": "2026-07-01",
   "datePublished": "2026-07-01"
 }
 
