@@ -30,7 +30,7 @@ If a model is making a prediction, many of us would like to know how the decisio
 Saliency maps use color to illustrate the extent to which a region of an image contributes to a given decision. Let's plot some saliency maps for our model:
 
 ```python
-# !pip install captum
+# !uv pip install captum
 from matplotlib import cm
 import numpy as np
 from matplotlib import pyplot as plt
@@ -48,11 +48,32 @@ def plot_map(cam, classe, prediction, img):
     axes[0].imshow(np.squeeze(img), cmap='gray')
     axes[1].imshow(np.squeeze(img), cmap='gray')
     
-    # Normalize and convert to heatmap
-    heatmap = np.uint8(cm.jet(cam[0])[..., :3] * 255)
+    # Use Captum's built-in interpolation to upscale the 4x4 map to 256x256
+    # cam must be a torch tensor for lgc.interpolate
+    if isinstance(cam, np.ndarray):
+        cam_tensor = torch.from_numpy(cam)
+    else:
+        cam_tensor = cam
+
+    cam_interpolated = lgc.interpolate(cam_tensor, (256, 256))
+    cam_agg = np.squeeze(cam_interpolated.detach().cpu().numpy())
+
+    # Normalize to [0, 1]
+    cam_min, cam_max = cam_agg.min(), cam_agg.max()
+    if cam_max > cam_min:
+        cam_norm = (cam_agg - cam_min) / (cam_max - cam_min)
+    else:
+        cam_norm = cam_agg
+
+    heatmap = np.uint8(cm.jet(cam_norm)[..., :3] * 255)
+
+    # TODO: try plotting cam_agg directly. Is manual normalization needed?
+    # Note: alpha sets partial transparency
     i = axes[1].imshow(heatmap, cmap="jet", alpha=0.5)
     fig.colorbar(i)
-    plt.suptitle("Class: {}. Pred = {}".format(classe, prediction))
+    plt.suptitle("Class: {}. Pred = {:.3f}".format(classe, prediction))
+    #plt.savefig(f"saliency_{random.randint(0,10000)}.png")
+    #plt.close()
 
 # Plot each image with accompanying saliency map
 for image_id in range(10):
@@ -118,13 +139,32 @@ def plot_map2(cam1, cam2, classe, prediction, img):
     axes[1].imshow(np.squeeze(img), cmap='gray')
     axes[2].imshow(np.squeeze(img), cmap='gray')
     
-    heatmap1 = np.uint8(cm.jet(cam1[0])[..., :3] * 255)
-    heatmap2 = np.uint8(cm.jet(cam2[0])[..., :3] * 255)
+    # Process cam1 (GradCAM) - Interpolate to match input size
+    if isinstance(cam1, np.ndarray):
+        cam1_tensor = torch.from_numpy(cam1)
+    else:
+        cam1_tensor = cam1
+
+    cam1_interpolated = lgc.interpolate(cam1_tensor, (256, 256))
+    cam1_agg = np.squeeze(cam1_interpolated.detach().cpu().numpy())
+    c1_min, c1_max = cam1_agg.min(), cam1_agg.max()
+    cam1_norm = (cam1_agg - c1_min) / (c1_max - c1_min) if c1_max > c1_min else cam1_agg
+    heatmap1 = np.uint8(cm.jet(cam1_norm)[..., :3] * 255)
+
+    # Process cam2 (Integrated Gradients) - Already full size
+    cam2_agg = np.squeeze(cam2)
+    if len(cam2_agg.shape) == 3:
+        cam2_agg = np.mean(cam2_agg, axis=0)
+    c2_min, c2_max = cam2_agg.min(), cam2_agg.max()
+    cam2_norm = (cam2_agg - c2_min) / (c2_max - c2_min) if c2_max > c2_min else cam2_agg
+    heatmap2 = np.uint8(cm.jet(cam2_norm)[..., :3] * 255)
+
     i = axes[1].imshow(heatmap1, cmap="jet", alpha=0.5)
     j = axes[2].imshow(heatmap2, cmap="jet", alpha=0.5)
     fig.colorbar(i)
-    plt.suptitle("Class: {}. Pred = {}".format(classe, prediction))
+    plt.suptitle("Class: {}. Pred = {:.3f}".format(classe, prediction))
 
+model.eval()
 # Plot each image with accompanying saliency map
 for image_id in range(10):
     SEED_INPUT = torch.tensor(dataset_test[image_id], dtype=torch.float32).unsqueeze(0)
@@ -139,7 +179,6 @@ for image_id in range(10):
     
     # Display the class
     _class = 'normal' if labels_test[image_id] == 0 else 'effusion'
-    model.eval()
     with torch.no_grad():
         _prediction = model(SEED_INPUT).item()
     
